@@ -210,8 +210,8 @@ void VanMonsterApi::extractTitleData(xmlDocPtr doc, Van &van)
 			identifiedTitles++;
 
 			// TODO: Should be a better, safer way to find children
-			xmlNodePtr detailsNode = nodes->nodeTab[0]->children;
-			xmlNodePtr registrationNode = nodes->nodeTab[0]->children->next;
+			xmlNodePtr detailsNode = node->children;
+			xmlNodePtr registrationNode = node->children->next;
 
 			titleText = (char *) detailsNode->children->content;
 			registrationText = (char *) registrationNode->children->content;
@@ -340,8 +340,6 @@ std::vector<Van> VanMonsterApi::fetchVanData()
 
     for (int pageNum = 1; !done ; pageNum++) {
 
-    	std::cerr << pageNum << std::endl;
-
     	doc = fetchWebPage(VanMonsterApi::API_ENDPOINT + std::to_string(pageNum));
 
 		xpathObj = xpathSearchDom(doc, VIEW_AD_BUTTON_XPATH);
@@ -352,8 +350,7 @@ std::vector<Van> VanMonsterApi::fetchVanData()
 			xmlXPathFreeObject(xpathObj);
 		}
 
-		// done = isLastPage(doc);
-		done = true;
+		done = isLastPage(doc);
 
 		// free the document when we are done
 		xmlFreeDoc(doc);
@@ -369,7 +366,7 @@ std::string VanMonsterApi::getServiceName()
 
 std::string VanMonsterApi::getServiceUrl()
 {
-	return VanMonsterApi::API_ENDPOINT;
+	return VanMonsterApi::SITE_ROOT;
 }
 
 extern "C"

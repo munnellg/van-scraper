@@ -10,6 +10,7 @@ Van::Van()
 	this->price = 0;
 	this->mileage = 0;
 	this->milesPerGallon = 0;
+	this->payload = 0;
 	this->length = 0;
 	this->make = "";
 	this->model = "";
