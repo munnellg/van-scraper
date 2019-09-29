@@ -1,0 +1,3 @@
++ Need to write a proper exporter for van data after it has been gathered by the scraper
++ Need some sort of persistence which stops the scraper from pulling down the same van multiple times during separate scrapes.
++ Need to log the date of the scrape as value for a van will be dependent on how old it is. Taking this step will hopefully allow the dataset to indicate value for purchase even as the dataset ages.
