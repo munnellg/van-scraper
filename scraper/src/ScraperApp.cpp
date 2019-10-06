@@ -104,49 +104,17 @@ void ScraperApp::addServiceApi(ServiceApi *api)
 
 void ScraperApp::scrape()
 {
-	std::cout << "Ad Title" << "\t" <<
-		"Make" << "\t" <<
-		"Model" << "\t" <<
-		"Year" << "\t" <<
-		"Price" << "\t" <<
-		"Length Code" << "\t" <<
-		"Height Code" << "\t" <<
-		"Mileage" << "\t" <<
-		"Emissions" << "\t" <<
-		"Body Type" << "\t" <<
-		"Engine Size" << "\t" <<
-		"Miles Per Gallon" << "\t" <<
-		"Payload" << "\t" <<
-		"Length" << "\t" <<
-		"Fuel Type" << "\t" <<
-		"Colour" << "\t" <<
-		"Transmission" << "\t" <<
-		"Has Abs" << "\t" <<
-		"Has Air Conditioning" << "\t" <<
-		"Has Airbags" << "\t" <<
-		"Has Bluetooth" << "\t" <<
-		"Has Bulkhead" << "\t" <<
-		"Has Cd Player" << "\t" <<
-		"Has Electric Mirrors" << "\t" <<
-		"Has Electric Windows" << "\t" <<
-		"Has Heated Seats" << "\t" <<
-		"Has Ply Lining" << "\t" <<
-		"Has Power Steering" << "\t" <<
-		"Has Cruise Control" << "\t" <<
-		"Advertisement Url" << "\t" <<
-		"UUID" << std::endl;
-		
+	this->knowledgeGraph.loadGraphFromFile("test.ttl");
+
 	for (auto it = this->apiEndpoints.begin(); it != this->apiEndpoints.end(); it++) {
 		Logger::info(
 			"Scraping ", (*it)->getServiceName(), " at ", (*it)->getServiceUrl()
 		);
 
-		std::vector<Van> vans = (*it)->fetchVanData();
-
-		for (auto itt = vans.begin(); itt != vans.end(); itt++) {
-			std::cout << *itt << std::endl;
-		}
+		(*it)->fetchVanData(this->knowledgeGraph);
 	}
+
+	this->knowledgeGraph.saveGraphToFile("test.ttl");
 }
 
 ScraperApp::InitResultCode ScraperApp::initialise()

@@ -2,3 +2,4 @@
 *.tsv
 van-monster.so
 scraper/scrape
+scraper/data/*

@@ -2,16 +2,18 @@
 #define __SERVICE_API__
 
 #include "Van.hpp"
+#include "KnowledgeGraph.hpp"
 
 #include <string>
 #include <vector>
+#include <functional>
 
 class ServiceApi
 {
 public:
 	virtual ~ServiceApi() {};
 	
-	virtual std::vector<Van> fetchVanData() = 0;
+	virtual void fetchVanData(KnowledgeGraph &knowledgeGraph) = 0;
 
 	virtual std::string getServiceName() = 0;
 

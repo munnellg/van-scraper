@@ -46,14 +46,29 @@ void Van::setUuid(std::string uuid)
 	this->uuid = uuid;
 }
 
-void Van::setHeightCode(HeightCode hc)
+std::string Van::getUuid()
 {
-	this->heightCode = hc;
+	return this->uuid;
 }
 
-void Van::setLengthCode(LengthCode lc)
+void Van::setHeightCode(HeightCode heightCode)
 {
-	this->lengthCode = lc;
+	this->heightCode = heightCode;
+}
+
+HeightCode Van::getHeightCode()
+{
+	return this->heightCode;
+}
+
+void Van::setLengthCode(LengthCode lengthCode)
+{
+	this->lengthCode = lengthCode;
+}
+
+LengthCode Van::getLengthCode()
+{
+	return this->lengthCode;
 }
 
 void Van::setAdTitle(std::string adTitle)
@@ -68,7 +83,12 @@ std::string Van::getAdTitle()
 
 void Van::setPrice(int price)
 {
-	this->price = price;	
+	this->price = price;
+}
+
+int Van::getPrice()
+{
+	return this->price;
 }
 
 void Van::setYear(int year)
@@ -76,14 +96,29 @@ void Van::setYear(int year)
 	this->year = year;
 }
 
+int Van::getYear()
+{
+	return this->year;
+}
+
 void Van::setMake(std::string make)
 {
-	this->make = make;	
+	this->make = make;
+}
+
+std::string Van::getMake()
+{
+	return this->make;
 }
 
 void Van::setModel(std::string model)
 {
-	this->model = model;	
+	this->model = model;
+}
+
+std::string Van::getModel()
+{
+	return this->model;
 }
 
 void Van::setMileage(double mileage)
@@ -91,9 +126,19 @@ void Van::setMileage(double mileage)
 	this->mileage = mileage;
 }
 
+double Van::getMileage()
+{
+	return this->mileage;
+}
+
 void Van::setEmissions(double emissions)
 {
 	this->emissions = emissions;
+}
+
+double Van::getEmissions()
+{
+	return this->emissions;
 }
 
 void Van::setBodyType(std::string bodyType)
@@ -101,9 +146,19 @@ void Van::setBodyType(std::string bodyType)
 	this->bodyType = bodyType;
 }
 
+std::string Van::getBodyType()
+{
+	return this->bodyType;
+}
+
 void Van::setEngineSize(double engineSize)
 {
 	this->engineSize = engineSize;
+}
+
+double Van::getEngineSize()
+{
+	return this->engineSize;
 }
 
 void Van::setMilesPerGallon(double milesPerGallon)
@@ -111,9 +166,19 @@ void Van::setMilesPerGallon(double milesPerGallon)
 	this->milesPerGallon = milesPerGallon;
 }
 
+double Van::getMilesPerGallon()
+{
+	return this->milesPerGallon;
+}
+
 void Van::setPayload(double payload)
 {
 	this->payload = payload;
+}
+
+double Van::getPayload()
+{
+	return this->payload;
 }
 
 void Van::setLength(double length)
@@ -121,9 +186,19 @@ void Van::setLength(double length)
 	this->length = length;
 }
 
+double Van::getLength()
+{
+	return this->length;
+}
+
 void Van::setFuelType(FuelType fuelType)
 {
 	this->fuelType = fuelType;
+}
+
+FuelType Van::getFuelType()
+{
+	return this->fuelType;
 }
 
 void Van::setColour(std::string colour)
@@ -131,9 +206,19 @@ void Van::setColour(std::string colour)
 	this->colour = colour;
 }
 
+std::string Van::getColour()
+{
+	return this->colour;
+}
+
 void Van::setTransmission(Transmission transmission)
 {
 	this->transmission = transmission;
+}
+
+Transmission Van::getTransmission()
+{
+	return this->transmission;
 }
 
 void Van::setHasAbs(IsPresent hasAbs)
@@ -141,9 +226,19 @@ void Van::setHasAbs(IsPresent hasAbs)
 	this->hasAbs = hasAbs;
 }
 
+IsPresent Van::getHasAbs()
+{
+	return this->hasAbs;
+}
+
 void Van::setHasAirConditioning(IsPresent hasAirConditioning)
 {
 	this->hasAirConditioning = hasAirConditioning;
+}
+
+IsPresent Van::getHasAirConditioning()
+{
+	return this->hasAirConditioning;
 }
 
 void Van::setHasAirbags(IsPresent hasAirbags)
@@ -151,9 +246,19 @@ void Van::setHasAirbags(IsPresent hasAirbags)
 	this->hasAirbags = hasAirbags;
 }
 
+IsPresent Van::getHasAirbags()
+{
+	return this->hasAirbags;
+}
+
 void Van::setHasBluetooth(IsPresent hasBluetooth)
 {
 	this->hasBluetooth = hasBluetooth;
+}
+
+IsPresent Van::getHasBluetooth()
+{
+	return this->hasBluetooth;
 }
 
 void Van::setHasBulkhead(IsPresent hasBulkhead)
@@ -161,9 +266,19 @@ void Van::setHasBulkhead(IsPresent hasBulkhead)
 	this->hasBulkhead = hasBulkhead;
 }
 
+IsPresent Van::getHasBulkhead()
+{
+	return this->hasBulkhead;
+}
+
 void Van::setHasCdPlayer(IsPresent hasCdPlayer)
 {
 	this->hasCdPlayer = hasCdPlayer;
+}
+
+IsPresent Van::getHasCdPlayer()
+{
+	return this->hasCdPlayer;
 }
 
 void Van::setHasCruiseControl(IsPresent hasCruiseControl)
@@ -171,9 +286,19 @@ void Van::setHasCruiseControl(IsPresent hasCruiseControl)
 	this->hasCruiseControl = hasCruiseControl;
 }
 
+IsPresent Van::getHasCruiseControl()
+{
+	return this->hasCruiseControl;
+}
+
 void Van::setHasElectricMirrors(IsPresent hasElectricMirrors)
 {
 	this->hasElectricMirrors = hasElectricMirrors;
+}
+
+IsPresent Van::getHasElectricMirrors()
+{
+	return this->hasElectricMirrors;
 }
 
 void Van::setHasElectricWindows(IsPresent hasElectricWindows)
@@ -181,9 +306,19 @@ void Van::setHasElectricWindows(IsPresent hasElectricWindows)
 	this->hasElectricWindows = hasElectricWindows;
 }
 
+IsPresent Van::getHasElectricWindows()
+{
+	return this->hasElectricWindows;
+}
+
 void Van::setHasHeatedSeats(IsPresent hasHeatedSeats)
 {
 	this->hasHeatedSeats = hasHeatedSeats;
+}
+
+IsPresent Van::getHasHeatedSeats()
+{
+	return this->hasHeatedSeats;
 }
 
 void Van::setHasPlyLining(IsPresent hasPlyLining)
@@ -191,14 +326,24 @@ void Van::setHasPlyLining(IsPresent hasPlyLining)
 	this->hasPlyLining = hasPlyLining;
 }
 
+IsPresent Van::getHasPlyLining()
+{
+	return this->hasPlyLining;
+}
+
 void Van::setHasPowerSteering(IsPresent hasPowerSteering)
 {
 	this->hasPowerSteering = hasPowerSteering;
 }
 
+IsPresent Van::getHasPowerSteering()
+{
+	return this->hasPowerSteering;
+}
+
 void Van::setAdvertisementUrl(std::string advertisementUrl)
 {
-	this->advertisementUrl = advertisementUrl;	
+	this->advertisementUrl = advertisementUrl;
 }
 
 std::string Van::getAdvertisementUrl()

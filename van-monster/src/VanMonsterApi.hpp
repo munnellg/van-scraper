@@ -24,6 +24,7 @@ private:
 	static const xmlChar* FEATURES_XPATH;
 	static const xmlChar* VIEW_AD_BUTTON_XPATH;
 	static const xmlChar* NEXT_PAGE_BUTTON_XPATH;
+	static const xmlChar* IMAGES_XPATH;
 
 	static const std::regex YEAR_REGEX;
 	static const std::regex HEIGHT_REGEX;
@@ -66,16 +67,18 @@ private:
 
 	void extractTitleData(xmlDocPtr doc, Van &van);
 
+	void extractImages(xmlDocPtr doc);
+
 	Van extractVanData(xmlNodePtr ptr);
 
-	void processResults(xmlNodeSetPtr nodes, std::vector<Van> &vans);
+	void processResults(xmlNodeSetPtr nodes, KnowledgeGraph &knowledgeGraph);
 
 public:
 	VanMonsterApi();
 
 	~VanMonsterApi();
 
-	std::vector<Van> fetchVanData();
+	void fetchVanData(KnowledgeGraph &knowledgeGraph);
 
 	std::string getServiceName();
 

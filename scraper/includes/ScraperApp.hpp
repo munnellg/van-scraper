@@ -3,6 +3,7 @@
 
 #include "ServiceApi.hpp"
 #include "PluginHandle.hpp"
+#include "KnowledgeGraph.hpp"
 
 #include <vector>
 
@@ -31,7 +32,7 @@ public:
 	ScraperApp::InitResultCode initialise();
 
 	void usage(const char *progname);
-
+	
 	static int run(int argc, char *argv[]);
 
 private:
@@ -40,6 +41,10 @@ private:
 	std::vector<PluginHandle *> plugins;
 
 	std::string confFile;
+
+	KnowledgeGraph knowledgeGraph;
+
+
 };
 
 #endif

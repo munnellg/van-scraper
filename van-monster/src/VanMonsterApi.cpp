@@ -5,7 +5,6 @@
 #include <Logger.hpp>
 #include <ServiceRegistry.hpp>
 
-#include <cstdio>
 #include <iostream>
 #include <algorithm>    // std::remove_if
 
@@ -21,6 +20,7 @@ const xmlChar* VanMonsterApi::TITLE_XPATH            = (xmlChar *) "//h1[contain
 const xmlChar* VanMonsterApi::VIEW_AD_BUTTON_XPATH   = (xmlChar *) "//div[contains(concat(' ', normalize-space(@class), ' '), ' view-button ')]//a";
 const xmlChar* VanMonsterApi::NEXT_PAGE_BUTTON_XPATH = (xmlChar *) "//div[contains(concat(' ', normalize-space(@class), ' '), ' page-select ')]//a[contains(concat(' ', normalize-space(@class), ' '), ' next ')]";
 const xmlChar* VanMonsterApi::FEATURES_XPATH         = (xmlChar *) "//div[contains(concat(' ', normalize-space(@class), ' '), ' vehicle-spec-list ')]";
+const xmlChar* VanMonsterApi::IMAGES_XPATH           = (xmlChar *) "//div[contains(concat(' ', normalize-space(@id), ' '), ' vehicle-carousel ')]//img";
 
 const std::regex VanMonsterApi::YEAR_REGEX("^[1-9][0-9][0-9][0-9]");
 const std::regex VanMonsterApi::HEIGHT_REGEX("[ 1-4]H[1-3][L ]");
@@ -263,6 +263,23 @@ void VanMonsterApi::extractTitleData(xmlDocPtr doc, Van &van)
 	}
 }
 
+void VanMonsterApi::extractImages(xmlDocPtr doc)
+{
+	xpathSearchIterateDom(doc, IMAGES_XPATH,
+		[&](xmlNodePtr node) {
+			std::string img = getXmlAttribute(node, "src");
+			
+			std::vector<unsigned char> data = fetchRawData(img);
+
+			std::string fname = getBasename(img);
+
+			saveRawDataFile(fname, data);
+
+			return true;
+		}
+	);
+}
+
 bool VanMonsterApi::isLastPage(xmlDocPtr doc)
 {
 	int size;
@@ -307,6 +324,8 @@ Van VanMonsterApi::extractVanData(xmlNodePtr ptr)
 
 	extractTitleData(advertisement, van);
 
+	extractImages(advertisement);
+
 	generateUuid(van);
 
 	xmlFreeDoc(advertisement);
@@ -314,7 +333,7 @@ Van VanMonsterApi::extractVanData(xmlNodePtr ptr)
 	return van;
 }
 
-void VanMonsterApi::processResults(xmlNodeSetPtr nodes, std::vector<Van> &vans)
+void VanMonsterApi::processResults(xmlNodeSetPtr nodes, KnowledgeGraph &knowledgeGraph)
 {
 	int size;
 	
@@ -325,26 +344,27 @@ void VanMonsterApi::processResults(xmlNodeSetPtr nodes, std::vector<Van> &vans)
 			continue;
 		}
 		
-		vans.push_back(extractVanData(nodes->nodeTab[i]));
+		Van van = extractVanData(nodes->nodeTab[i]);
+
+		knowledgeGraph.addVanToGraph(van);
 	}
 }
 
-std::vector<Van> VanMonsterApi::fetchVanData()
+void VanMonsterApi::fetchVanData(KnowledgeGraph &knowledgeGraph)
 {
-	std::vector<Van> result;
-
 	xmlDocPtr doc;
-    xmlXPathObjectPtr xpathObj; 
+	xmlXPathObjectPtr xpathObj; 
 
-    bool done = false;
+	bool done = false;
 
-    for (int pageNum = 1; !done ; pageNum++) {
+	for (int pageNum = 1; !done ; pageNum++) {
 
-    	doc = fetchWebPage(VanMonsterApi::API_ENDPOINT + std::to_string(pageNum));
+		doc = fetchWebPage(VanMonsterApi::API_ENDPOINT + std::to_string(pageNum));
 
 		xpathObj = xpathSearchDom(doc, VIEW_AD_BUTTON_XPATH);
+		
 		if(xpathObj != NULL) {
-			processResults(xpathObj->nodesetval, result);
+			processResults(xpathObj->nodesetval, knowledgeGraph);
 
 			// free the xpath result nodes
 			xmlXPathFreeObject(xpathObj);
@@ -354,9 +374,7 @@ std::vector<Van> VanMonsterApi::fetchVanData()
 
 		// free the document when we are done
 		xmlFreeDoc(doc);
-    }
-
-    return result;
+	}
 }
 
 std::string VanMonsterApi::getServiceName()
